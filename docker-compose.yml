@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./index.php:/var/www/html/index.php
+      - ./style.css:/var/www/html/style.css
+      - ./sofas_data:/var/www/html/sofas_data
+      - ./app/controllers:/var/www/html/controllers
+      - ./app/models:/var/www/html/models
+      - ./app/views:/var/www/html/views
+    depends_on:
+      - db
+
+  db:
+    build: ./db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test
+    volumes:
+      - ./db/data:/var/lib/mysql
+
